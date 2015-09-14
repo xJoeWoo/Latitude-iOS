@@ -1,0 +1,28 @@
+PODS:
+  - IHKeyboardAvoiding (2.4)
+  - IHKeyboardDismissing (1.1)
+  - IJReachability (0.1.0)
+  - SwiftyJSON (2.2.1)
+
+DEPENDENCIES:
+  - IHKeyboardAvoiding
+  - IHKeyboardDismissing
+  - IJReachability (from `https://github.com/Isuru-Nanayakkara/IJReachability.git`)
+  - SwiftyJSON (~> 2.2.1)
+
+EXTERNAL SOURCES:
+  IJReachability:
+    :git: https://github.com/Isuru-Nanayakkara/IJReachability.git
+
+CHECKOUT OPTIONS:
+  IJReachability:
+    :commit: da69c8f4bed9f82203bb49180fb36091b4cd0d28
+    :git: https://github.com/Isuru-Nanayakkara/IJReachability.git
+
+SPEC CHECKSUMS:
+  IHKeyboardAvoiding: f470ea004ae9befb3b10ff4db20d37af10f43e59
+  IHKeyboardDismissing: 7c23d41da51ca22f6a1091b3cf852821a2461ac9
+  IJReachability: 3eff33caca50869df09b257bcf712031a56a8575
+  SwiftyJSON: ae2d0a3d68025d136602a33c4ee215091ced3e33
+
+COCOAPODS: 0.38.2
