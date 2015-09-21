@@ -19,13 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sleep(1)
         
         UITextField.appearance().tintColor = Colors.greenLatitude()
-        // Override point for customization after application launch.
         
-//        self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-//        self.window!.backgroundColor = UIColor.blueColor()
-//        var loginCtl = ViewController(nibName:"LoginView",bundle:NSBundle.mainBundle())
-//        self.window!.rootViewController = loginCtl
-//        self.window!.makeKeyAndVisible()
+        MAMapServices.sharedServices().apiKey = "ce47270346cf52ed5e6e5122dce7c94c"
+
+        
+        // Override point for customization after application launch.
         
         return true
     }

@@ -1,10 +1,14 @@
 PODS:
+  - Alamofire (1.3.1)
+  - AMap3DMap (2.6.1)
   - IHKeyboardAvoiding (2.4)
   - IHKeyboardDismissing (1.1)
   - IJReachability (0.1.0)
   - SwiftyJSON (2.2.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 1.2)
+  - AMap3DMap
   - IHKeyboardAvoiding
   - IHKeyboardDismissing
   - IJReachability (from `https://github.com/Isuru-Nanayakkara/IJReachability.git`)
@@ -20,6 +24,8 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Isuru-Nanayakkara/IJReachability.git
 
 SPEC CHECKSUMS:
+  Alamofire: e4ab637e3195b645c814b87a652373439e59f2a4
+  AMap3DMap: 9ddc896034f7b5b8e28848c8abf7488a37e2897e
   IHKeyboardAvoiding: f470ea004ae9befb3b10ff4db20d37af10f43e59
   IHKeyboardDismissing: 7c23d41da51ca22f6a1091b3cf852821a2461ac9
   IJReachability: 3eff33caca50869df09b257bcf712031a56a8575

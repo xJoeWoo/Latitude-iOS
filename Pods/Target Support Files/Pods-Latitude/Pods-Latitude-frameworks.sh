@@ -52,12 +52,14 @@ code_sign_if_enabled() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_framework 'Pods-Latitude/Alamofire.framework'
   install_framework 'Pods-Latitude/IHKeyboardAvoiding.framework'
   install_framework 'Pods-Latitude/IHKeyboardDismissing.framework'
   install_framework 'Pods-Latitude/IJReachability.framework'
   install_framework 'Pods-Latitude/SwiftyJSON.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_framework 'Pods-Latitude/Alamofire.framework'
   install_framework 'Pods-Latitude/IHKeyboardAvoiding.framework'
   install_framework 'Pods-Latitude/IHKeyboardDismissing.framework'
   install_framework 'Pods-Latitude/IJReachability.framework'

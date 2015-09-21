@@ -9,7 +9,7 @@
 import UIKit
 import IHKeyboardAvoiding
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
     
     @IBOutlet var viewContainer:UIView!
     @IBOutlet var tfUsername:UITextField!
@@ -22,6 +22,8 @@ class LoginViewController: UIViewController {
     @IBOutlet var btnLoginTopSpace: NSLayoutConstraint!
     @IBOutlet var btnLogonTopSpace: NSLayoutConstraint!
     
+    @IBOutlet var btnLogonWidth: NSLayoutConstraint!
+    @IBOutlet var btnLogonAlignX: NSLayoutConstraint!
     
     var isNewUser = false
     
@@ -29,9 +31,11 @@ class LoginViewController: UIViewController {
     登录按钮点击响应
     */
     @IBAction func btnLogin_TouchUpInside() {
+        
         if checkInputs() {
-            
-            HttpModel.getJson(HttpModel.Urls.LOGIN, getInputs()) { (result) -> Void in
+            blinkView(btnLogin, true)
+            HttpModel.getJson(HttpModel.Urls.Login, getInputs()) { (result) -> Void in
+                self.blinkView(self.btnLogin, false)
                 switch (result){
                 case let .Error(e):
                     ()
@@ -39,22 +43,34 @@ class LoginViewController: UIViewController {
                     
                 case let .Value(json):
                     
-                    if let state = json[HttpModel.Params.TOKEN].int {
+                    if let state = json[HttpModel.Params.Token].string {
                         
-                        UserInfo.account = json[HttpModel.Params.ACCOUNT].stringValue
-                        UserInfo.id = json[HttpModel.Params.ID].intValue
-                        UserInfo.token = json[HttpModel.Params.TOKEN].stringValue
-                        UserInfo.force = json[HttpModel.Params.FORCE].intValue
-                        UserInfo.score = json[HttpModel.Params.SCORE_PLAYER].intValue
-                        UserInfo.fscore = json[HttpModel.Params.SCORE_FORCE].intValue
-                        UserInfo.name = json[HttpModel.Params.NAME].stringValue
+                        UserInfo.account = json[HttpModel.Params.Account].stringValue
+                        UserInfo.id = json[HttpModel.Params.Id].intValue
+                        UserInfo.token = json[HttpModel.Params.Token].stringValue
+                        UserInfo.force = json[HttpModel.Params.Force].intValue == 1 ? Force.One : Force.Two
+                        UserInfo.score = json[HttpModel.Params.ScorePlayer].intValue
+                        UserInfo.fscore = json[HttpModel.Params.ScoreForce].intValue
+                        UserInfo.name = json[HttpModel.Params.Name].stringValue
+                        
+                        PreferenceModel.saveString(PreferenceModel.Keys.UserName, value: UserInfo.account)
+                        
+//                        self.navigationController?.pushViewController(self.storyboard!.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController, animated: true)
+                        
+                        self.performSegueWithIdentifier("SegueToNav", sender: self)
                         
                         // TODO: 登录成功
                         
                     } else {
-                        self.isNewUser = true;
-                        self.btnLogin.enabled = false
-                        self.expendContainer()
+                        if self.isNewUser { // 注册后自动登录
+                            
+                            // TODO: 登录错误
+                            
+                        } else { // 未注册用户登录
+                            self.isNewUser = true;
+                            self.btnLogin.enabled = false
+                            self.expendContainer()
+                        }
                     }
                 }
             }
@@ -65,7 +81,9 @@ class LoginViewController: UIViewController {
     注册按钮点击响应
     */
     @IBAction func btnLogon_TouchUpInside() {
+        
         if checkInputs() {
+            
             if !isNewUser { // 直接点击注册需展开
                 
                 self.isNewUser = true;
@@ -74,27 +92,14 @@ class LoginViewController: UIViewController {
                 
             } else { // 展开信息完整后发起注册请求
                 
-                HttpModel.getJson(HttpModel.Urls.LOGON, getInputs()) { (result) -> Void in
-                    switch (result){
-                    case let .Error(e):
-                        ()
-                        // TODO: 网络错误
-
-                    case let .Value(json):
-                        
-                        if let state = json[HttpModel.Params.STATE].int{
-                            
-                            if state == 1 { // 注册成功
-                                
-                                // TODO: 注册成功
-
-                            }
-                        }
-                    }
-                }
+                let chooseForceAlert = UIAlertView(title: "决定团队", message: "请决定您的团队", delegate: self, cancelButtonTitle: nil, otherButtonTitles: "Force One", "Force Two")
+                
+                chooseForceAlert.show()
+                
             }
         }
     }
+    
     
     /**
     帐号输入框按下 Next 响应
@@ -126,10 +131,51 @@ class LoginViewController: UIViewController {
         btnLogon.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
     }
     
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        PreferenceModel.saveString(PreferenceModel.Keys.UserName, value: "")
+        return true
+    }
+    
+    /**
+    选择团队 UIAlertView 响应
+    */
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        
+        var params = getInputs()
+        params[HttpModel.Params.Force] = String(buttonIndex)
+        
+        blinkView(btnLogon, true)
+        
+        HttpModel.getJson(HttpModel.Urls.Logon, params) { (result) -> Void in
+            
+            self.blinkView(self.btnLogon, false)
+            
+            switch (result){
+            case let .Error(e):
+                ()
+                // TODO: 网络错误
+                
+            case let .Value(json):
+                
+                if let state = json[HttpModel.Params.State].int{
+                    
+                    if state == 1 { // 注册成功
+                        NSLog("Logon Succeed")
+                        self.btnLogin.enabled = true
+                        self.btnLogin.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+                        
+                    }
+                } else {
+                    println(json[HttpModel.Params.State].error)
+                }
+            }
+        }
+    }
+    
     /**
     检查输入
     */
-    func checkInputs() -> Bool {
+    private func checkInputs() -> Bool {
         var flag = false
         
         if tfUsername.hasText() && tfPassword.hasText() {
@@ -167,12 +213,12 @@ class LoginViewController: UIViewController {
     /**
     取得输入
     */
-    func getInputs() -> Dictionary<String, String> {
+    private func getInputs() -> Dictionary<String, String> {
         var dict = Dictionary<String, String>()
-        dict[HttpModel.Params.ACCOUNT] = tfUsername.text
-        dict[HttpModel.Params.PASSWORD] = tfPasswordConfirm.text
+        dict[HttpModel.Params.Account] = tfUsername.text
+        dict[HttpModel.Params.Password] = tfPasswordConfirm.text
         if tfName.hasText() {
-            dict[HttpModel.Params.NAME] = tfName.text
+            dict[HttpModel.Params.Name] = tfName.text
         }
         return dict
     }
@@ -192,9 +238,30 @@ class LoginViewController: UIViewController {
         ]
         anim.autoreverses = true
         anim.repeatCount = 2
-        anim.duration = 9/100
+        anim.duration = 9 / 100
         anim.delegate = self
         view.layer.addAnimation( anim, forKey:nil )
+    }
+    
+    /**
+    闪烁 View
+    */
+    func blinkView(view: UIView, _ start: Bool) {
+        if start {
+            UIView.animateWithDuration(0.75, delay: 0.0, options: UIViewAnimationOptions.Autoreverse | UIViewAnimationOptions.Repeat | UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+                if view.alpha == 1 {
+                    view.alpha = 0
+                } else {
+                    view.alpha = 1
+                }
+                }, completion: nil)
+        } else {
+            view.layer.removeAllAnimations()
+            UIView.animateWithDuration(0.1) { () -> Void in
+                view.alpha = 1
+            }
+        }
+        
     }
     
     /**
@@ -208,7 +275,7 @@ class LoginViewController: UIViewController {
     /**
     展开 Container View
     */
-    func expendContainer() {
+    private func expendContainer() {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
             
             self.tfPasswordConfirm.hidden = false
@@ -231,6 +298,8 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         
+        navigationController?.navigationBarHidden = true
+        
         // 白色背景圆角、阴影
         viewContainer.layer.cornerRadius = 4
         viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
@@ -239,6 +308,11 @@ class LoginViewController: UIViewController {
         
         // 避开弹出的软键盘
         IHKeyboardAvoiding.setAvoidingView(viewContainer)
+        
+        // 加载已登录用户名
+        if let username = PreferenceModel.getString(PreferenceModel.Keys.UserName) {
+            tfUsername.text = username
+        }
         
         super.viewDidLoad()
     }

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CD1F18091BA72A5E00754558 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = CD1F18081BA72A5E00754558 /* .gitignore */; };
+		CD55CCEA1BA83B02006E1B60 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD55CCE91BA83B02006E1B60 /* MainViewController.swift */; };
+		CD62CC361BA97543004CB934 /* PerferenceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD62CC351BA97543004CB934 /* PerferenceModel.swift */; };
 		CDB6DB6A1B9B161A0086DC90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6DB691B9B161A0086DC90 /* AppDelegate.swift */; };
 		CDB6DB6C1B9B161A0086DC90 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB6DB6B1B9B161A0086DC90 /* LoginViewController.swift */; };
 		CDB6DB6F1B9B161B0086DC90 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CDB6DB6D1B9B161B0086DC90 /* Main.storyboard */; };
@@ -18,7 +20,8 @@
 		CDE19CC11BA6807D0089FCF0 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE19CC01BA6807D0089FCF0 /* UserInfo.swift */; };
 		CDE19CC51BA6E3310089FCF0 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = CDE19CC41BA6E3310089FCF0 /* Podfile */; };
 		CDE19CC71BA706590089FCF0 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE19CC61BA706590089FCF0 /* Colors.swift */; };
-		F1F1E6523014E8D0C42A4A61 /* Pods_Latitude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F037FD8AC3B1D60D16F631EF /* Pods_Latitude.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D68EA5CFB0EF1B048544AF44 /* Pods_Latitude.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F037FD8AC3B1D60D16F631EF /* Pods_Latitude.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		D8F8F4D94C4394F812E06C8D /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E51E35B816DB9F7D0EBA0CC /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,9 +35,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E51E35B816DB9F7D0EBA0CC /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		315826DE4D7AB408F3719CDE /* Pods-Latitude.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Latitude.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Latitude/Pods-Latitude.debug.xcconfig"; sourceTree = "<group>"; };
 		A0931C782B8D0F50AA4DD79A /* Pods-Latitude.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Latitude.release.xcconfig"; path = "Pods/Target Support Files/Pods-Latitude/Pods-Latitude.release.xcconfig"; sourceTree = "<group>"; };
 		CD1F18081BA72A5E00754558 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		CD55CCE91BA83B02006E1B60 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CD62CC351BA97543004CB934 /* PerferenceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PerferenceModel.swift; sourceTree = "<group>"; };
+		CD62CC391BAB0396004CB934 /* AMapSwift-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AMapSwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		CDB6DB641B9B161A0086DC90 /* Latitude.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Latitude.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDB6DB681B9B161A0086DC90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CDB6DB691B9B161A0086DC90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,7 +64,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1F1E6523014E8D0C42A4A61 /* Pods_Latitude.framework in Frameworks */,
+				D8F8F4D94C4394F812E06C8D /* Pods.framework in Frameworks */,
+				D68EA5CFB0EF1B048544AF44 /* Pods_Latitude.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,8 +83,34 @@
 			isa = PBXGroup;
 			children = (
 				F037FD8AC3B1D60D16F631EF /* Pods_Latitude.framework */,
+				2E51E35B816DB9F7D0EBA0CC /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CD55CCEC1BA9490D006E1B60 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		CD55CCED1BA94916006E1B60 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				CDB6DB6B1B9B161A0086DC90 /* LoginViewController.swift */,
+				CD55CCE91BA83B02006E1B60 /* MainViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		CD55CCEE1BA9491E006E1B60 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CDE19CBC1BA5A7A90089FCF0 /* HttpModel.swift */,
+				CD62CC351BA97543004CB934 /* PerferenceModel.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		CDB6DB5B1B9B161A0086DC90 = {
@@ -104,7 +138,9 @@
 		CDB6DB661B9B161A0086DC90 /* Latitude */ = {
 			isa = PBXGroup;
 			children = (
-				CDB6DB6B1B9B161A0086DC90 /* LoginViewController.swift */,
+				CD55CCEE1BA9491E006E1B60 /* Model */,
+				CD55CCED1BA94916006E1B60 /* Controller */,
+				CD55CCEC1BA9490D006E1B60 /* View */,
 				CDB6DB691B9B161A0086DC90 /* AppDelegate.swift */,
 				CDB6DB6D1B9B161B0086DC90 /* Main.storyboard */,
 				CDB6DB701B9B161B0086DC90 /* Images.xcassets */,
@@ -117,8 +153,8 @@
 		CDB6DB671B9B161A0086DC90 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CD62CC391BAB0396004CB934 /* AMapSwift-Bridging-Header.h */,
 				CDB6DB681B9B161A0086DC90 /* Info.plist */,
-				CDE19CBC1BA5A7A90089FCF0 /* HttpModel.swift */,
 				CDE19CC01BA6807D0089FCF0 /* UserInfo.swift */,
 				CDE19CC61BA706590089FCF0 /* Colors.swift */,
 			);
@@ -304,9 +340,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD62CC361BA97543004CB934 /* PerferenceModel.swift in Sources */,
 				CDB6DB6C1B9B161A0086DC90 /* LoginViewController.swift in Sources */,
 				CDE19CC71BA706590089FCF0 /* Colors.swift in Sources */,
 				CDB6DB6A1B9B161A0086DC90 /* AppDelegate.swift in Sources */,
+				CD55CCEA1BA83B02006E1B60 /* MainViewController.swift in Sources */,
 				CDE19CC11BA6807D0089FCF0 /* UserInfo.swift in Sources */,
 				CDE19CBD1BA5A7A90089FCF0 /* HttpModel.swift in Sources */,
 			);
@@ -438,9 +476,14 @@
 			baseConfigurationReference = 315826DE4D7AB408F3719CDE /* Pods-Latitude.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Latitude/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Latitude/AMapSwift-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -449,9 +492,14 @@
 			baseConfigurationReference = A0931C782B8D0F50AA4DD79A /* Pods-Latitude.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Latitude/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "./Latitude/AMapSwift-Bridging-Header.h";
 			};
 			name = Release;
 		};

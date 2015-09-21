@@ -13,7 +13,12 @@ public struct UserInfo {
     static var account: String!
     static var token: String!
     static var name: String!
-    static var force: Int!
+    static var force: Force!
     static var score: Int!
     static var fscore: Int!
+}
+
+enum Force: Int {
+    case One = 0
+    case Two = 1
 }
