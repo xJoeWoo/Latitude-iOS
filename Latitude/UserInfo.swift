@@ -9,13 +9,13 @@
 import Foundation
 
 public struct UserInfo {
-    static var id: Int!
-    static var account: String!
-    static var token: String!
-    static var name: String!
+    static var id: Int = -1
+    static var account: String = ""
+    static var token: String = ""
+    static var name: String = "NG"
     static var force: Force!
-    static var score: Int!
-    static var fscore: Int!
+    static var playerScore: Int = -1
+    static var forceScore: Int = -1
 }
 
 enum Force: Int {

@@ -12,7 +12,7 @@ import IHKeyboardAvoiding
 class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDelegate {
     
     @IBOutlet var viewContainer:UIView!
-    @IBOutlet var tfUsername:UITextField!
+    @IBOutlet var tfAccount:UITextField!
     @IBOutlet var tfPassword:UITextField!
     @IBOutlet var btnLogin:UIButton!
     @IBOutlet var btnLogon:UIButton!
@@ -21,9 +21,6 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
     
     @IBOutlet var btnLoginTopSpace: NSLayoutConstraint!
     @IBOutlet var btnLogonTopSpace: NSLayoutConstraint!
-    
-    @IBOutlet var btnLogonWidth: NSLayoutConstraint!
-    @IBOutlet var btnLogonAlignX: NSLayoutConstraint!
     
     var isNewUser = false
     
@@ -49,8 +46,8 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
                         UserInfo.id = json[HttpModel.Params.Id].intValue
                         UserInfo.token = json[HttpModel.Params.Token].stringValue
                         UserInfo.force = json[HttpModel.Params.Force].intValue == 1 ? Force.One : Force.Two
-                        UserInfo.score = json[HttpModel.Params.ScorePlayer].intValue
-                        UserInfo.fscore = json[HttpModel.Params.ScoreForce].intValue
+                        UserInfo.playerScore = json[HttpModel.Params.PlayerScore].intValue
+                        UserInfo.forceScore = json[HttpModel.Params.ForceScore].intValue
                         UserInfo.name = json[HttpModel.Params.Name].stringValue
                         
                         PreferenceModel.saveString(PreferenceModel.Keys.UserName, value: UserInfo.account)
@@ -104,7 +101,7 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
     /**
     帐号输入框按下 Next 响应
     */
-    @IBAction func tfUsername_DidEndOnExit() {
+    @IBAction func tfAccount_DidEndOnExit() {
         tfPassword.becomeFirstResponder()
     }
     
@@ -178,7 +175,7 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
     private func checkInputs() -> Bool {
         var flag = false
         
-        if tfUsername.hasText() && tfPassword.hasText() {
+        if tfAccount.hasText() && tfPassword.hasText() {
             if !isNewUser {
                 flag = true
             } else {
@@ -189,8 +186,8 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
         }
         
         if !flag {
-            if !tfUsername.hasText() {
-                shakeView(tfUsername)
+            if !tfAccount.hasText() {
+                shakeView(tfAccount)
             }
             if !tfPassword.hasText() {
                 shakeView(tfPassword)
@@ -215,7 +212,7 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
     */
     private func getInputs() -> Dictionary<String, String> {
         var dict = Dictionary<String, String>()
-        dict[HttpModel.Params.Account] = tfUsername.text
+        dict[HttpModel.Params.Account] = tfAccount.text
         dict[HttpModel.Params.Password] = tfPasswordConfirm.text
         if tfName.hasText() {
             dict[HttpModel.Params.Name] = tfName.text
@@ -285,6 +282,16 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
             
             self.btnLogin.setTitleColor(Colors.greyText(), forState: UIControlState.Normal)
             self.btnLogon.setTitleColor(Colors.greenLatitude(), forState: UIControlState.Normal)
+
+            let btnLogonX = NSLayoutConstraint(item: self.btnLogon, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: self.viewContainer, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
+            btnLogonX.priority = 600
+            btnLogonX.active = true
+            
+            let btnLogonWidth = NSLayoutConstraint(item: self.btnLogon, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: self.viewContainer, attribute: NSLayoutAttribute.Width, multiplier: 0.9, constant: 0)
+            btnLogonWidth.priority = 600
+            btnLogonWidth.active = true
+            
+            self.btnLogin.hidden = true
             
             self.btnLoginTopSpace.constant += (self.tfPasswordConfirm.frame.size.height + 10) * 2
             self.btnLogonTopSpace.constant += (self.tfPasswordConfirm.frame.size.height + 10) * 2
@@ -298,8 +305,6 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
     
     override func viewDidLoad() {
         
-        navigationController?.navigationBarHidden = true
-        
         // 白色背景圆角、阴影
         viewContainer.layer.cornerRadius = 4
         viewContainer.layer.shadowOffset = CGSize(width: 3, height: 3)
@@ -311,7 +316,7 @@ class LoginViewController: UIViewController, UIAlertViewDelegate, UITextFieldDel
         
         // 加载已登录用户名
         if let username = PreferenceModel.getString(PreferenceModel.Keys.UserName) {
-            tfUsername.text = username
+            tfAccount.text = username
         }
         
         super.viewDidLoad()

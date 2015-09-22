@@ -11,26 +11,38 @@ import UIKit
 class MainViewController: UIViewController, MAMapViewDelegate {
     
     var mapView: MAMapView!
+    var scoreView: ScoreView!
     
+    @IBOutlet var btnBarLeft: UIBarButtonItem!
+    @IBOutlet var btnBarAdd: UIBarButtonItem!
     @IBOutlet var viewMapContainer: UIView!
     
+    @IBAction func setSpot() {
+        scoreView.setPlayerScore(++UserInfo.playerScore)
+    }
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBarHidden = false
+        // 关闭导航左边按钮响应
+        btnBarLeft.enabled = false
+        btnBarLeft.setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState: UIControlState.Disabled)
         
-        title = "WeMore"
+        // 左边按钮标题
+        btnBarLeft.title = UserInfo.name
         
+        // 初始化、添加地图
         mapView = MAMapView(frame: viewMapContainer.bounds)
         mapView.delegate = self
         viewMapContainer.addSubview(mapView)
         
-        navigationController?.navigationBar.barTintColor = UserInfo.force == Force.One ? Colors.forceOne() : Colors.forceTwo()
-        navigationController?.navigationBar.tintColor = UIColor.whiteColor()
-        navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor()]
-
+        
+        
+        // 初始化状态栏上的 ScoreView
+        scoreView = ScoreView()
+        navigationItem.titleView = scoreView
+        
     }
 
     override func didReceiveMemoryWarning() {

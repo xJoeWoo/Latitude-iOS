@@ -17,7 +17,6 @@ extension UIColor {
             blue: CGFloat((hex >> 00) & 0xff) / 255,
             alpha: alpha > 0 ? alpha : 1.0
         )
-        println(alpha)
     }
 }
 

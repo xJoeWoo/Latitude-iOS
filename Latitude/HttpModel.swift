@@ -75,7 +75,7 @@ class HttpModel {
         static let LeftTopLongitude = "minlongitude"
         static let RightBottomLatitude = "minlatitude"
         static let RightBottomLongitude = "maxlongitude"
-        static let ScorePlayer = "score"
-        static let ScoreForce = "gscore"
+        static let PlayerScore = "score"
+        static let ForceScore = "gscore"
     }
 }
